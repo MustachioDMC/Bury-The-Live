@@ -89,7 +89,7 @@ public class MovimientoJugadorA : MonoBehaviour
             if (movimiento.x < 0)
             {
                 sprite.flipX = true;
-                direccion=1;
+                direccion=-1;
             }
             else if (movimiento.x > 0)
             {
@@ -187,7 +187,7 @@ public class MovimientoJugadorA : MonoBehaviour
     private bool DetectarEnemigo()
     {
         RaycastHit2D rayo = Physics2D.BoxCast(
-        transform.position,
+        transform.position + Vector3.down * distanciaAtaque2,
         tamannoAtaque,
         0,
         Vector2.right * direccion,
@@ -217,7 +217,7 @@ public class MovimientoJugadorA : MonoBehaviour
             Gizmos.color = Color.red;
         }
         Gizmos.DrawWireCube(
-    transform.position + Vector3.right * (direccion == 0 ? 1 : direccion) * distanciaAtaque
+    transform.position + Vector3.right * direccion * distanciaAtaque
     + Vector3.down * distanciaAtaque2,
     tamannoAtaque
     );

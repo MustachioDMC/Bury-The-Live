@@ -11,6 +11,7 @@ public class MovimientoEnemigoM : MonoBehaviour
     public float distanciaAtaque;
     public LayerMask capaJugador;
 
+    
     float temporizador;
     int direccion;
     Animator anim;
@@ -38,16 +39,17 @@ public class MovimientoEnemigoM : MonoBehaviour
         //ActualizarMovimiento();
         Girar();
         ActualizarTemporizador();
-        
+        if(!muerto){
         if (DetectarJugador())
-        {
-            anim.SetBool("Atacar", true);
-            atacando = true;
-        }
-        else
-        {
-            anim.SetBool("Atacar", false);
-            atacando = false;
+            {
+                anim.SetBool("Atacar", true);
+                atacando = true;
+            }
+            else
+            {
+                anim.SetBool("Atacar", false);
+                atacando = false;
+            }
         }
     }
 
@@ -84,19 +86,27 @@ public class MovimientoEnemigoM : MonoBehaviour
 
     private void ActualizarTemporizador()
     {
-        if (!atacando) 
-        {
-            temporizador -= Time.deltaTime;
-        }
-        if (temporizador < 0)
-        {
-            direccion *= -1;
-            temporizador = tiempoPatrulla;
+        if(!muerto){
+            if (!atacando) 
+            {
+                temporizador -= Time.deltaTime;
+            }
+            if (temporizador < 0)
+            {
+                direccion *= -1;
+                temporizador = tiempoPatrulla;
+            }
         }
     }
 
     void FixedUpdate()
     {
+        if (muerto)
+        {
+            cuerpo.velocity = Vector2.zero;
+            return;
+        }
+
         if (atacando)
         {
             cuerpo.velocity = new Vector2(0, cuerpo.velocity.y);
