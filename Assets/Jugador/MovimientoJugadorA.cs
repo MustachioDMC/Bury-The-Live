@@ -6,14 +6,20 @@ using UnityEngine;
 public class MovimientoJugadorA : MonoBehaviour
 {   
     public int vidaMax;
-    Vector2 knockBack;
     public float velocidad;
     public float fuerzaSalto;
-    bool saltando;
+    public Vector2 tamannoAtaque;
+    public float distanciaAtaque;
+    public float distanciaAtaque2;
+    public LayerMask capaEnemigo;
     public float distanciaCaja;
     public Vector2 tamannoCaja;
     public LayerMask capaSuelo;
+     Vector2 knockBack;
+    GameObject aGolpear;
+    bool saltando;
     bool atacando;
+    int direccion;
     bool muerto = false;
     int DobleCount;
     Animator anim;
@@ -25,6 +31,7 @@ public class MovimientoJugadorA : MonoBehaviour
     {
         knockBack = Vector2.zero;
         vidaRestante = vidaMax;
+        direccion = 1;
         movimiento = new Vector3();
         cuerpo = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
@@ -82,10 +89,12 @@ public class MovimientoJugadorA : MonoBehaviour
             if (movimiento.x < 0)
             {
                 sprite.flipX = true;
+                direccion=1;
             }
             else if (movimiento.x > 0)
             {
                 sprite.flipX = false;
+                direccion=1;
             }
         }
     }
@@ -108,6 +117,7 @@ public class MovimientoJugadorA : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.J)){
             
             atacando=true;
+            
         }
         else
         {
@@ -131,7 +141,7 @@ public class MovimientoJugadorA : MonoBehaviour
         }
         
     }   
-    public void RecibeDanno(int cuanto, Vector2 posEnemigo)
+    public void RecibeDanno(int cuanto)
     {
          if (muerto)
         {
@@ -155,10 +165,10 @@ public class MovimientoJugadorA : MonoBehaviour
 
     anim.SetTrigger("Dolor");
 
-    Vector2 direccionAtaque = ((Vector2)transform.position) - posEnemigo;
-    direccionAtaque.Normalize();
-
-    knockBack = direccionAtaque * 550 + 200 * Vector2.up;
+    }
+    public void Espadazo()
+    {
+        if (aGolpear != null) aGolpear.GetComponent<MovimientoEnemigoM>().RecibeDanno(1);
     }
 
     bool EstaEnElSuelo()
@@ -174,10 +184,43 @@ public class MovimientoJugadorA : MonoBehaviour
             return false;
         }
     }
+    private bool DetectarEnemigo()
+    {
+        RaycastHit2D rayo = Physics2D.BoxCast(
+        transform.position,
+        tamannoAtaque,
+        0,
+        Vector2.right * direccion,
+        distanciaAtaque,
+        capaEnemigo
+    );
+
+        if (rayo) {
+            aGolpear = rayo.rigidbody.gameObject;
+            //jugador.GetComponent<MovimientoJugador>().RecibeDanno(0, transform.position);
+            return true;
+        }
+        else
+        {
+            aGolpear = null;
+        }
+        return false;
+    }
+
 
 
     void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position + Vector3.down * distanciaCaja, tamannoCaja);
+        if (DetectarEnemigo())
+        {
+            Gizmos.color = Color.red;
+        }
+        Gizmos.DrawWireCube(
+    transform.position + Vector3.right * (direccion == 0 ? 1 : direccion) * distanciaAtaque
+    + Vector3.down * distanciaAtaque2,
+    tamannoAtaque
+    );
+     Gizmos.color = Color.white;
     }
 }

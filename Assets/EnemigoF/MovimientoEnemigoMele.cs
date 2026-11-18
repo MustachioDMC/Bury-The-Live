@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovimientoEnemigoM : MonoBehaviour
 {
+    public int vidaMax;
     public float tiempoPatrulla;
     public float velocidad;
     public Vector2 tamannoAtaque;
@@ -16,11 +17,14 @@ public class MovimientoEnemigoM : MonoBehaviour
     SpriteRenderer sprite;
     Rigidbody2D cuerpo;
     bool atacando;
+    bool muerto=false;
     GameObject aGolpear;
+    int vidaRestante;
 
     // Start is called before the first frame update
     void Start()
     {
+        vidaRestante = vidaMax;
         temporizador = tiempoPatrulla;
         direccion = 1;
         anim = GetComponent<Animator>();
@@ -105,7 +109,32 @@ public class MovimientoEnemigoM : MonoBehaviour
 
     public void Punnalada()
     {
-        if (aGolpear != null) aGolpear.GetComponent<MovimientoJugadorA>().RecibeDanno(1, transform.position);
+        if (aGolpear != null) aGolpear.GetComponent<MovimientoJugadorA>().RecibeDanno(1);
+    }
+    public void RecibeDanno(int cuanto)
+    {
+         if (muerto)
+        {
+            return;
+        }
+
+    vidaRestante -= cuanto;
+
+    Debug.Log("Ouch!! Vida restante: " + vidaRestante);
+
+    if (vidaRestante <= 0)
+    {
+        muerto = true;
+        anim.SetTrigger("Muerte");
+
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<Rigidbody2D>().gravityScale = 0;
+
+        return;
+    }
+
+    anim.SetTrigger("Dolor");
+
     }
 
     void OnDrawGizmos()
@@ -119,4 +148,5 @@ public class MovimientoEnemigoM : MonoBehaviour
         );
         Gizmos.color = Color.white;
     }
+    
 }

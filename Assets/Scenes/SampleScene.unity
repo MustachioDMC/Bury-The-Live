@@ -1747,6 +1747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0458d1aae91f19d459da9d43da4c869c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vidaMax: 0
   tiempoPatrulla: 3
   velocidad: 2
   tamannoAtaque: {x: 2, y: 3}
@@ -2173,6 +2174,12 @@ MonoBehaviour:
   vidaMax: 3
   velocidad: 7
   fuerzaSalto: 450
+  tamannoAtaque: {x: 1.6, y: 2.3}
+  distanciaAtaque: 2
+  distanciaAtaque2: 2.7
+  capaEnemigo:
+    serializedVersion: 2
+    m_Bits: 128
   distanciaCaja: 4.2
   tamannoCaja: {x: 1, y: 0.4}
   capaSuelo:
