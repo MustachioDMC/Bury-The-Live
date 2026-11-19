@@ -11,12 +11,6 @@ public class ZonaSalida : MonoBehaviour
         puerta = GetComponentInParent<PuertaScript>();
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            puerta.CerrarPuerta();
-        }
-    }
+   
 }
 

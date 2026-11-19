@@ -1650,10 +1650,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91fb321c9e4bd1a448436487226af897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemigos:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  listaEnemigos:
+  - {fileID: 1336202806}
+  - {fileID: 809262063}
+  - {fileID: 1422403384}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -4869,6 +4869,7 @@ MonoBehaviour:
   capaJugador:
     serializedVersion: 2
     m_Bits: 64
+  puerta: {fileID: 0}
 --- !u!95 &809262065
 Animator:
   serializedVersion: 5
@@ -7228,6 +7229,7 @@ MonoBehaviour:
   capaJugador:
     serializedVersion: 2
     m_Bits: 64
+  puerta: {fileID: 0}
 --- !u!95 &1336202808
 Animator:
   serializedVersion: 5
@@ -7429,6 +7431,7 @@ MonoBehaviour:
   capaJugador:
     serializedVersion: 2
     m_Bits: 64
+  puerta: {fileID: 0}
 --- !u!95 &1422403386
 Animator:
   serializedVersion: 5

@@ -1,56 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PuertaScript : MonoBehaviour
 {
-    public MovimientoEnemigoM[] enemigos;
-
-    private Collider2D colisionPuerta;
-    private SpriteRenderer spritePuerta;
-
-    bool abierta = false;
-    bool todosMuertos = true;
-
+    public GameObject[] listaEnemigos;
+    TilemapRenderer dibujo;
+    TilemapCollider2D colision;
+    // Start is called before the first frame update
     void Start()
     {
-        colisionPuerta = GetComponent<Collider2D>();
-        spritePuerta = GetComponent<SpriteRenderer>();
+        
     }
 
+    // Update is called once per frame
     void Update()
     {
-        if (!abierta)
+        int contador = 0;
+        foreach (GameObject go in listaEnemigos)
         {
-            todosMuertos = true;
-
-            foreach (MovimientoEnemigoM enemigo in enemigos)
+            MovimientoEnemigoM scr = go.GetComponent<MovimientoEnemigoM>();
+            if (scr.EstaMuerto)
             {
-                if (enemigo != null && !enemigo.EstaMuerto)
-                {
-                    todosMuertos = false;
-                    break;
-                }
+                contador++;
             }
+            // contador += go.GetComponent<ScriptBoton>().EstaPulsado() ? 1 : 0;
+        }
 
-            if (todosMuertos)
-            {
-                AbrirPuerta();
-            }
+        if (contador == listaEnemigos.Length)
+        {
+            //this.gameObject.SetActive(false);
+            dibujo.GetComponent<TilemapRenderer>().enabled = false;
+            colision.GetComponent<TilemapCollider2D>().enabled = false;
+        }
+        else
+        {
+            dibujo.GetComponent<TilemapRenderer>().enabled = true;
+            colision.GetComponent<TilemapCollider2D>().enabled = true;
         }
     }
-
-    void AbrirPuerta()
-    {
-        abierta = true;
-        colisionPuerta.enabled = false;
-        spritePuerta.enabled = false;
-    }
-
-    public void CerrarPuerta()
-    {
-        colisionPuerta.enabled = true;
-        spritePuerta.enabled = true;
-        abierta = false;
-    }
+    
 }

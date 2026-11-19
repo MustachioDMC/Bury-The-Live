@@ -10,6 +10,7 @@ public class MovimientoEnemigoM : MonoBehaviour
     public Vector2 tamannoAtaque;
     public float distanciaAtaque;
     public LayerMask capaJugador;
+    public GameObject puerta;
 
     
     float temporizador;
