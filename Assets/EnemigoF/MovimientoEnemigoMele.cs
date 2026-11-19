@@ -52,6 +52,10 @@ public class MovimientoEnemigoM : MonoBehaviour
             }
         }
     }
+    public bool EstaMuerto
+    {
+        get { return muerto; }
+    }
 
     private bool DetectarJugador()
     {
