@@ -21,7 +21,7 @@ public class PuertaScript : MonoBehaviour
         foreach (GameObject go in listaEnemigos)
         {
             MovimientoEnemigoM scr = go.GetComponent<MovimientoEnemigoM>();
-            if (scr.EstaMuerto)
+            if (scr.EstaMuerto==true)
             {
                 contador++;
             }
@@ -30,14 +30,11 @@ public class PuertaScript : MonoBehaviour
 
         if (contador == listaEnemigos.Length)
         {
-            //this.gameObject.SetActive(false);
-            dibujo.GetComponent<TilemapRenderer>().enabled = false;
-            colision.GetComponent<TilemapCollider2D>().enabled = false;
+            this.gameObject.SetActive(false);
         }
         else
         {
-            dibujo.GetComponent<TilemapRenderer>().enabled = true;
-            colision.GetComponent<TilemapCollider2D>().enabled = true;
+            this.gameObject.SetActive(true);
         }
     }
     
