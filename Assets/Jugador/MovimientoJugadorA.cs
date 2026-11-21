@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+
 
 public class MovimientoJugadorA : MonoBehaviour
 {   
+    public Transform destino;
     public int vidaMax;
     public float velocidad;
     public float fuerzaSalto;
@@ -113,7 +116,6 @@ public class MovimientoJugadorA : MonoBehaviour
         {
             movimiento = new Vector3();
         }
-        if(!saltando){}
         if(Input.GetKeyDown(KeyCode.J)){
             
             atacando=true;
@@ -122,6 +124,12 @@ public class MovimientoJugadorA : MonoBehaviour
         else
         {
             atacando=false;
+        }
+        if(muerto){
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
     }
 
@@ -159,7 +167,7 @@ public class MovimientoJugadorA : MonoBehaviour
 
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
-
+        Camera.main.transform.position = destino.position;
         return;
     }
 
@@ -169,6 +177,20 @@ public class MovimientoJugadorA : MonoBehaviour
     public void Espadazo()
     {
         if (aGolpear != null) aGolpear.GetComponent<MovimientoEnemigoM>().RecibeDanno(1);
+    }
+    public void setVidaRestante(int fuera)
+    {
+        vidaRestante = fuera;
+
+        if (vidaRestante <= 0 && !muerto)
+        {
+            muerto = true;
+            anim.SetTrigger("Muerte");
+
+            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<Rigidbody2D>().gravityScale = 0;
+            Camera.main.transform.position = destino.position;
+        }
     }
 
     bool EstaEnElSuelo()

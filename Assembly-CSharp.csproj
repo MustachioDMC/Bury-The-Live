@@ -68,6 +68,7 @@
     <Compile Include="Assets\PuertaScript.cs" />
     <Compile Include="Assets\EnemigoF\MovimientoEnemigoMele.cs" />
     <Compile Include="Assets\Jugador\MovimientoJugadorA.cs" />
+    <Compile Include="Assets\ScriptObstaculo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
