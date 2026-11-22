@@ -167,12 +167,16 @@ public class MovimientoJugadorA : MonoBehaviour
 
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
-        Camera.main.transform.position = destino.position;
+        Invoke("gameover", 2f);
         return;
     }
 
     anim.SetTrigger("Dolor");
 
+    }
+    void gameover()
+    {
+        Camera.main.transform.position = destino.position;
     }
     public void Espadazo()
     {
@@ -189,7 +193,7 @@ public class MovimientoJugadorA : MonoBehaviour
 
             GetComponent<BoxCollider2D>().enabled = false;
             GetComponent<Rigidbody2D>().gravityScale = 0;
-            Camera.main.transform.position = destino.position;
+            Invoke("gameover", 2f);
         }
     }
 
