@@ -18,6 +18,7 @@ public class MovimientoJugadorA : MonoBehaviour
     public float distanciaCaja;
     public Vector2 tamannoCaja;
     public LayerMask capaSuelo;
+    public GameObject[] listaEnemigos;
      Vector2 knockBack;
     GameObject aGolpear;
     bool saltando;
@@ -49,6 +50,7 @@ public class MovimientoJugadorA : MonoBehaviour
         RotarPersonaje();
         EstaEnElSuelo();
         ActualizarAnimacion();
+        GanarPartida();
     }
     void ActualizarAnimacion()
     {
@@ -233,7 +235,23 @@ public class MovimientoJugadorA : MonoBehaviour
         return false;
     }
 
+    void GanarPartida()
+    {
+        int contador = 0;
+        foreach (GameObject go in listaEnemigos)
+        {
+            MovimientoEnemigoM scr = go.GetComponent<MovimientoEnemigoM>();
+            if (scr.EstaMuerto==true)
+            {
+                contador++;
+            }
+        }
 
+        if (contador == listaEnemigos.Length)
+        {
+            FindObjectOfType<GameManager>().MostrarVictoria();
+        }
+    }
 
     void OnDrawGizmos()
     {

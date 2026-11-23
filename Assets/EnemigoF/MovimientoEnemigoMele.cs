@@ -135,7 +135,7 @@ public class MovimientoEnemigoM : MonoBehaviour
 
     vidaRestante -= cuanto;
 
-    Debug.Log("Ouch!! Vida restante: " + vidaRestante);
+    Debug.Log("Enemigo Vida restante: " + vidaRestante);
 
     if (vidaRestante <= 0)
     {
