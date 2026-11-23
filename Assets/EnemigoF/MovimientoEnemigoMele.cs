@@ -11,7 +11,7 @@ public class MovimientoEnemigoM : MonoBehaviour
     public float distanciaAtaque;
     public LayerMask capaJugador;
     public GameObject puerta;
-
+    public int puntosAlMorir = 100;
     
     float temporizador;
     int direccion;
@@ -144,6 +144,7 @@ public class MovimientoEnemigoM : MonoBehaviour
 
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
+        FindObjectOfType<GameManager>().SumarPuntos(puntosAlMorir);
 
         return;
     }
