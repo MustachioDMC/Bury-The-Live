@@ -4,15 +4,37 @@ using UnityEngine;
 
 public class PowerPlatano : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float altura = 0.3f;
+    public float velocidad = 2f;
+
+    Vector3 posicionInicial;
+
     void Start()
     {
-        
+        posicionInicial = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        float movimiento = Mathf.Sin(Time.time * velocidad) * altura;
+
+        transform.position = posicionInicial + Vector3.up * movimiento;
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Algo ha tocado el platano: " + collision.name);
+
+        if (collision.CompareTag("Player"))
+        {
+            Debug.Log("El jugador ha tocado el platano");
+
+            MovimientoJugadorA jugador = collision.GetComponent<MovimientoJugadorA>();
+
+            if (jugador != null)
+            {
+                jugador.Curar(3);
+                Destroy(gameObject);
+            }
+        }
     }
 }

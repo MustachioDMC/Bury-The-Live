@@ -40,6 +40,7 @@ public class MovimientoJugadorA : MonoBehaviour
         cuerpo = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        FindObjectOfType<GameManager>().ActualizarVida(vidaRestante);
     }
 
     // Update is called once per frame
@@ -51,6 +52,7 @@ public class MovimientoJugadorA : MonoBehaviour
         EstaEnElSuelo();
         ActualizarAnimacion();
         GanarPartida();
+        DetectarEnemigo();
     }
     void ActualizarAnimacion()
     {
@@ -159,7 +161,7 @@ public class MovimientoJugadorA : MonoBehaviour
         }
 
     vidaRestante -= cuanto;
-
+    FindObjectOfType<GameManager>().ActualizarVida(vidaRestante);
     Debug.Log("Ouch!! Vida restante: " + vidaRestante);
 
     if (vidaRestante <= 0)
@@ -187,9 +189,10 @@ public class MovimientoJugadorA : MonoBehaviour
     public void setVidaRestante(int fuera)
     {
         vidaRestante = fuera;
-
+        FindObjectOfType<GameManager>().ActualizarVida(vidaRestante);
         if (vidaRestante <= 0 && !muerto)
         {
+            
             muerto = true;
             anim.SetTrigger("Muerte");
 
@@ -197,6 +200,18 @@ public class MovimientoJugadorA : MonoBehaviour
             GetComponent<Rigidbody2D>().gravityScale = 0;
             Invoke("gameover", 2f);
         }
+    }
+
+    public void Curar(int cantidad)
+    {
+        vidaRestante += cantidad;
+
+        if (vidaRestante > vidaMax)
+        {
+            vidaRestante = vidaMax;
+        }
+
+        FindObjectOfType<GameManager>().ActualizarVida(vidaRestante);
     }
 
     bool EstaEnElSuelo()

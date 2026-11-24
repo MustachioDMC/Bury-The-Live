@@ -7,9 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI textoPuntuacion;
+    public TextMeshProUGUI vida;
     public GameObject panelVictoria;
     bool victoria = false;
     int puntuacion;
+
 
     void Start()
     {
@@ -45,5 +47,9 @@ public class GameManager : MonoBehaviour
         panelVictoria.SetActive(true);
 
         Time.timeScale = 0;
+    }
+    public void ActualizarVida(int actVida)
+    {
+        vida.text= "Vida Restante: " + actVida;
     }
 }
