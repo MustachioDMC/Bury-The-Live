@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI textoPuntuacion;
-    public TextMeshProUGUI vida;
+    public Image[] corazones;
+    public Sprite corazonLleno;
+    public Sprite corazonVacio;
     public GameObject panelVictoria;
     bool victoria = false;
     int puntuacion;
@@ -48,8 +51,18 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0;
     }
-    public void ActualizarVida(int actVida)
+    public void ActualizarVida(int vidaActual)
+{
+    for (int i = 0; i < corazones.Length; i++)
     {
-        vida.text= "Vida Restante: " + actVida;
+        if (i < vidaActual)
+        {
+            corazones[i].sprite = corazonLleno;
+        }
+        else
+        {
+            corazones[i].sprite = corazonVacio;
+        }
     }
+}
 }

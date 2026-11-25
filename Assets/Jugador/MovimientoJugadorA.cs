@@ -217,7 +217,7 @@ public class MovimientoJugadorA : MonoBehaviour
     bool EstaEnElSuelo()
     {  
         RaycastHit2D rc = Physics2D.BoxCast(
-            transform.position, tamannoCaja, 0, Vector2.down, distanciaCaja, capaSuelo);
+            transform.position + Vector3.down * 0.5f, tamannoCaja, 0, Vector2.down, distanciaCaja, capaSuelo);
         if (rc)
         {
             return true;
@@ -270,7 +270,7 @@ public class MovimientoJugadorA : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position + Vector3.down * distanciaCaja, tamannoCaja);
+        Gizmos.DrawWireCube(transform.position + Vector3.down *(0.5f + distanciaCaja), tamannoCaja);
         if (DetectarEnemigo())
         {
             Gizmos.color = Color.red;
