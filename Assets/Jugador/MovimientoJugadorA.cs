@@ -15,11 +15,8 @@ public class MovimientoJugadorA : MonoBehaviour
     public float distanciaAtaque;
     public float distanciaAtaque2;
     public LayerMask capaEnemigo;
-    public float distanciaCaja;
-    public Vector2 tamannoCaja;
     public LayerMask capaSuelo;
     public GameObject[] listaEnemigos;
-     Vector2 knockBack;
     GameObject aGolpear;
     bool saltando;
     bool atacando;
@@ -33,7 +30,6 @@ public class MovimientoJugadorA : MonoBehaviour
     int vidaRestante;
     void Start()
     {
-        knockBack = Vector2.zero;
         vidaRestante = vidaMax;
         direccion = 1;
         movimiento = new Vector3();
@@ -215,9 +211,22 @@ public class MovimientoJugadorA : MonoBehaviour
     }
 
     bool EstaEnElSuelo()
-    {  
+    {
+        Bounds limites = GetComponent<Collider2D>().bounds;
+
+        Vector2 origen = new Vector2(
+            limites.center.x,
+            limites.min.y
+        );
+
         RaycastHit2D rc = Physics2D.BoxCast(
-            transform.position + Vector3.down * 0.5f, tamannoCaja, 0, Vector2.down, distanciaCaja, capaSuelo);
+            origen,
+            new Vector2(limites.size.x * 0.8f, 0.3f),
+            0,
+            Vector2.down,
+            0.05f,
+            capaSuelo
+        );
         if (rc)
         {
             return true;
@@ -269,17 +278,25 @@ public class MovimientoJugadorA : MonoBehaviour
     }
 
     void OnDrawGizmos()
+{
+    Collider2D col = GetComponent<Collider2D>();
+
+    if (col != null)
     {
-        Gizmos.DrawWireCube(transform.position + Vector3.down *(0.5f + distanciaCaja), tamannoCaja);
-        if (DetectarEnemigo())
-        {
-            Gizmos.color = Color.red;
-        }
+        Bounds limites = col.bounds;
+
+        Vector3 origen = new Vector3(
+            limites.center.x,
+            limites.min.y,
+            0
+        );
+
+        Gizmos.color = Color.green;
+
         Gizmos.DrawWireCube(
-    transform.position + Vector3.right * direccion * distanciaAtaque
-    + Vector3.down * distanciaAtaque2,
-    tamannoAtaque
-    );
-     Gizmos.color = Color.white;
+            origen + Vector3.down * 0.05f,
+            new Vector3(limites.size.x * 0.8f, 0.3f, 0)
+        );
     }
+}
 }
